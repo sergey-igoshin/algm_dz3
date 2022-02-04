@@ -21,10 +21,10 @@ import hashlib
 def hash_sha512(u):
     salt = 'url'
     hash_salt = hashlib.sha512(u.encode() + salt.encode()).hexdigest()
-    if hash_salt in url_hash.keys():
-        return {u: hash_salt}
-    else:
+    if hash_salt == url_hash.get(u):
         return True
+    else:
+        return {u: hash_salt}
 
 
 url_hash = {
@@ -34,7 +34,7 @@ url_hash = {
 }
 
 url = input('Введите url: ')
-#hash_sha512(url)
+hash_sha512(url)
 
 try:
     url_hash.update(hash_sha512(url))
@@ -43,5 +43,3 @@ try:
 except TypeError:
     print(f'Объект "{url}" уже есть в кэше')
     print(url_hash.get(url))
-
-
